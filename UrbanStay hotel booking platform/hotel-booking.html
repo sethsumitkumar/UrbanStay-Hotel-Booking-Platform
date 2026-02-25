@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanStay · Hotel Booking Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+        }
+
+        /* main app container */
+        .booking-app {
+            max-width: 1440px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 30px 60px -20px rgba(0,20,40,0.3);
+            min-height: 100vh;
+        }
+
+        /* header - professional & clean */
+        .app-header {
+            background: white;
+            padding: 1.2rem 2.5rem;
+            border-bottom: 1px solid #e9eef2;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-icon {
+            background: linear-gradient(145deg, #2563eb, #1e40af);
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.6rem;
+            box-shadow: 0 8px 16px -6px #2563eb60;
+        }
+
+        .brand-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(145deg, #1e293b, #334155);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .brand-dot {
+            color: #2563eb;
+            font-size: 2rem;
+            margin-left: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .nav-links span {
+            cursor: default;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .avatar {
+            background: #e2e8f0;
+            border-radius: 40px;
+            padding: 0.4rem 0.8rem 0.4rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .avatar-circle {
+            width: 36px;
+            height: 36px;
+            background: #2563eb;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* search hero */
+        .search-section {
+            background: linear-gradient(135deg, #0b1e33, #132b44);
+            padding: 2.8rem 2.5rem;
+            color: white;
+        }
+
+        .search-title {
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .search-title strong {
+            color: #ffd966;
+            font-weight: 600;
+        }
+
+        .search-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            background: white;
+            padding: 1.2rem;
+            border-radius: 100px;
+            box-shadow: 0 20px 35px -10px #00000040;
+        }
+
+        .search-field {
+            flex: 2 1 250px;
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border-radius: 60px;
+            padding: 0.2rem 1.2rem;
+            gap: 0.8rem;
+        }
+
+        .search-field i {
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+
+        .search-field input, .search-field select {
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 1rem 0;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-btn {
+            background: #2563eb;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0 3rem;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.1s ease;
+            box-shadow: 0 10px 20px -8px #1e3a8a;
+            min-height: 58px;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* main content area */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+            padding: 2.5rem;
+            background: #f8fafc;
+        }
+
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* filter sidebar */
+        .filter-panel {
+            background: white;
+            border-radius: 28px;
+            padding: 1.8rem;
+            box-shadow: 0 10px 30px -10px #b0c4db;
+            height: fit-content;
+        }
+
+        .filter-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            color: #1e293b;
+        }
+
+        .clear-filter {
+            color: #2563eb;
+            background: none;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem 0;
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #475569;
+        }
+
+        .price-slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        /* property grid */
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -15px #9ca9b9;
+            transition: transform 0.15s ease;
+            cursor: pointer;
+            border: 1px solid #e9f0f5;
+        }
+
+        .property-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 40px -15px #64748b;
+        }
+
+        .card-img {
+            height: 190px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #94a3b8;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .property-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .property-price {
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .property-price small {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .property-meta {
+            display: flex;
+            gap: 1rem;
+            color: #64748b;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            background: #fbbf24;
+            color: #0f172a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .book-now-tag {
+            background: #1e293b;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .book-now-tag:hover {
+            background: #0f172a;
+        }
+
+        /* booking history */
+        .booking-history {
+            margin-top: 2rem;
+            background: #f1f5f9;
+            border-radius: 24px;
+            padding: 1.5rem;
+        }
+
+        .history-item {
+            padding: 0.8rem;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .footer {
+            background: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .booking-modal {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 36px;
+            padding: 2rem;
+            box-shadow: 0 40px 70px -10px #00000070;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.8rem;
+        }
+
+        .close-modal {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #94a3b8;
+        }
+
+        .booking-detail {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+        }
+
+        .booking-field {
+            margin: 1rem 0;
+        }
+
+        .booking-field label {
+            font-weight: 600;
+            color: #334155;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .booking-field input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 1rem;
+        }
+
+        .confirm-btn {
+            background: #2563eb;
+            color: white;
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-app">
+        <!-- header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon">U</div>
+                <span class="brand-text">UrbanStay<span class="brand-dot">•</span></span>
+            </div>
+            <div class="nav-links">
+                <span>Hotels</span>
+                <span>Destinations</span>
+                <span>My Trips</span>
+            </div>
+            <div class="user-profile">
+                <div class="avatar">
+                    <span>Alex M.</span>
+                    <div class="avatar-circle">A</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- search hero -->
+        <div class="search-section">
+            <div class="search-title">
+                Find your <strong>perfect stay</strong> in 500+ cities
+            </div>
+            <div class="search-grid">
+                <div class="search-field">
+                    <i>📍</i>
+                    <input type="text" placeholder="Where to?" id="destinationInput" value="New York">
+                </div>
+                <div class="search-field">
+                    <i>📅</i>
+                    <input type="text" placeholder="Check-in — Check-out" value="Mar 15 - Mar 20">
+                </div>
+                <div class="search-field">
+                    <i>👤</i>
+                    <select id="guestSelect">
+                        <option>2 guests</option>
+                        <option>1 guest</option>
+                        <option>3 guests</option>
+                        <option>4 guests</option>
+                    </select>
+                </div>
+                <button class="search-btn" id="searchBtn">🔍 Search</button>
+            </div>
+        </div>
+
+        <!-- main layout with filter + results -->
+        <div class="main-layout">
+            <!-- filter sidebar -->
+            <aside class="filter-panel">
+                <div class="filter-title">
+                    Filter by
+                    <button class="clear-filter" id="clearFilters">Clear all</button>
+                </div>
+                <div class="filter-group">
+                    <div class="filter-label">Price per night</div>
+                    <input type="range" min="50" max="500" value="300" class="price-slider" id="priceRange">
+                    <div class="price-values">
+                        <span>$50</span>
+                        <span id="selectedPrice">$300</span>
+                        <span>$500+</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <div class="filter-label">Property type</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" class="filterCheckbox" value="hotel" checked> Hotel</label>
+                        <label class="checkbox-item"><input type="checkbox" class="filterCheckbox" value="apartment" checked> Apartment</label>
+                        <label class="checkbox-item"><input type="checkbox" class="filterCheckbox" value="villa" checked> Villa</label>
+                        <label class="checkbox-item"><input type="checkbox" class="filterCheckbox" value="resort" checked> Resort</label>
+                    </div>
+                </div>
+                
+                <!-- mini booking history -->
+                <div class="booking-history">
+                    <div style="font-weight:600; margin-bottom:1rem;">📋 Your bookings</div>
+                    <div id="bookingHistoryList">
+                        <div class="history-item">No bookings yet</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- property grid section -->
+            <section>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.8rem;">✨ 150+ stays</h2>
+                    <select style="border: 1px solid #cbd5e1; border-radius: 40px; padding: 0.6rem 1.5rem;">
+                        <option>Price: low to high</option>
+                        <option>Price: high to low</option>
+                        <option>Top rated</option>
+                    </select>
+                </div>
+                <div class="property-grid" id="propertyGrid">
+                    <!-- cards will be generated via js -->
+                </div>
+            </section>
+        </div>
+
+        <!-- footer -->
+        <footer class="footer">
+            © 2025 UrbanStay · part of MERN stack demo · full booking simulation
+        </footer>
+    </div>
+
+    <!-- booking modal overlay -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="booking-modal">
+            <div class="modal-header">
+                <h3 id="modalHotelName">The Plaza</h3>
+                <span class="close-modal" id="closeModalBtn">&times;</span>
+            </div>
+            <div class="booking-detail">
+                <div><strong id="modalPrice">$299</strong> / night</div>
+                <div>⭐ 4.8 · superhost</div>
+            </div>
+            <div class="booking-field">
+                <label>Check-in</label>
+                <input type="date" id="checkinInput" value="2025-04-15">
+            </div>
+            <div class="booking-field">
+                <label>Check-out</label>
+                <input type="date" id="checkoutInput" value="2025-04-20">
+            </div>
+            <div class="booking-field">
+                <label>Guests</label>
+                <input type="number" id="guestCount" value="2" min="1" max="6">
+            </div>
+            <button class="confirm-btn" id="confirmBookingBtn">Confirm & Pay</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- DATA ----------
+            const properties = [
+                { id: 1, name: 'The Plaza Hotel', price: 299, type: 'hotel', rating: 4.8, image: 'url(\'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400\')' },
+                { id: 2, name: 'Skyline Apartment', price: 189, type: 'apartment', rating: 4.6, image: 'url(\'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400\')' },
+                { id: 3, name: 'Villa Mediterraneo', price: 520, type: 'villa', rating: 4.9, image: 'url(\'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400\')' },
+                { id: 4, name: 'Sunset Resort & Spa', price: 410, type: 'resort', rating: 4.7, image: 'url(\'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400\')' },
+                { id: 5, name: 'Downtown Loft', price: 215, type: 'apartment', rating: 4.5, image: 'url(\'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400\')' },
+                { id: 6, name: 'Grand Hotel Royal', price: 335, type: 'hotel', rating: 4.7, image: 'url(\'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400\')' }
+            ];
+
+            // references
+            const propertyGrid = document.getElementById('propertyGrid');
+            const priceRange = document.getElementById('priceRange');
+            const selectedPriceSpan = document.getElementById('selectedPrice');
+            const clearBtn = document.getElementById('clearFilters');
+            const searchBtn = document.getElementById('searchBtn');
+            
+            // modal
+            const modal = document.getElementById('bookingModal');
+            const closeModal = document.getElementById('closeModalBtn');
+            const modalHotelName = document.getElementById('modalHotelName');
+            const modalPrice = document.getElementById('modalPrice');
+            const confirmBtn = document.getElementById('confirmBookingBtn');
+            
+            // booking history
+            const historyDiv = document.getElementById('bookingHistoryList');
+
+            // load bookings from localStorage
+            let bookings = JSON.parse(localStorage.getItem('urbanstay_bookings')) || [];
+
+            function saveBookings() {
+                localStorage.setItem('urbanstay_bookings', JSON.stringify(bookings));
+                renderBookingHistory();
+            }
+
+            function renderBookingHistory() {
+                if (!historyDiv) return;
+                if (bookings.length === 0) {
+                    historyDiv.innerHTML = '<div class="history-item">No bookings yet</div>';
+                    return;
+                }
+                let html = '';
+                bookings.slice(-3).reverse().forEach(b => {
+                    html += `<div class="history-item">🏨 ${b.name} · ${b.nights} nights · $${b.total}</div>`;
+                });
+                historyDiv.innerHTML = html;
+            }
+
+            // render property cards
+            function renderProperties(props) {
+                propertyGrid.innerHTML = '';
+                props.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'property-card';
+                    card.innerHTML = `
+                        <div class="card-img" style="background-image: ${p.image}; background-color: #94a3b8; background-size: cover;"></div>
+                        <div class="card-content">
+                            <div class="property-title">
+                                ${p.name}
+                                <span class="rating">⭐ ${p.rating}</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>${p.type}</span> • <span>max 4 guests</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span class="property-price">$${p.price} <small>/ night</small></span>
+                                <button class="book-now-tag" data-id="${p.id}">Book now</button>
+                            </div>
+                        </div>
+                    `;
+                    propertyGrid.appendChild(card);
+                });
+
+                // attach book now events
+                document.querySelectorAll('.book-now-tag').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.dataset.id);
+                        const prop = properties.find(p => p.id === id);
+                        if (prop) {
+                            modalHotelName.textContent = prop.name;
+                            modalPrice.textContent = '$' + prop.price;
+                            modal.classList.add('active');
+                        }
+                        e.stopPropagation();
+                    });
+                });
+            }
+
+            // filter properties
+            function filterProperties() {
+                const maxPrice = parseInt(priceRange.value);
+                const filtered = properties.filter(p => p.price <= maxPrice);
+                renderProperties(filtered);
+            }
+
+            // initial render
+            renderProperties(properties);
+
+            // price slider update
+            priceRange.addEventListener('input', () => {
+                selectedPriceSpan.textContent = '$' + priceRange.value;
+                filterProperties();
+            });
+
+            // clear filters
+            clearBtn.addEventListener('click', () => {
+                priceRange.value = 300;
+                selectedPriceSpan.textContent = '$300';
+                filterProperties();
+            });
+
+            // search simulation
+            searchBtn.addEventListener('click', () => {
+                const destination = document.getElementById('destinationInput').value;
+                alert(`Searching in ${destination || 'New York'}... (demo)`);
+            });
+
+            // modal close
+            closeModal.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+
+            // confirm booking
+            confirmBtn.addEventListener('click', () => {
+                const checkin = document.getElementById('checkinInput').value;
+                const checkout = document.getElementById('checkoutInput').value;
+                const guests = document.getElementById('guestCount').value;
+                
+                const nights = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000*3600*24)) || 3;
+                const total = 299 * nights; // demo price
+                
+                const booking = {
+                    id: Date.now(),
+                    name: modalHotelName.textContent,
+                    nights,
+                    total,
+                    checkin,
+                    checkout
+                };
+                
+                bookings.push(booking);
+                saveBookings();
+                
+                alert(`✅ Booking confirmed! Total: $${total}`);
+                modal.classList.remove('active');
+            });
+
+            // initial booking history render
+            renderBookingHistory();
+        })();
+    </script>
+</body>
+</html>
